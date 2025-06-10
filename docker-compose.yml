@@ -2,13 +2,14 @@ version: '3.8'
 
 services:
   frontend:
-    build:
-      context: ./frontend
-      dockerfile: ./Dockerfile
+    image: ghcr.io/amshaine/excellence_test_frontend:latest
     ports:
-      - "3000:3000"
+      - "3002:3000"
     environment:
-      - NEXT_PUBLIC_API_URL=${API_URL:-http://localhost:8000}
+      - NEXT_PUBLIC_API_URL=http://localhost:8002
+    volumes:
+      - frontend:/app
+      - /app/node_modules
     restart: always
     deploy:
       resources:
@@ -16,11 +17,9 @@ services:
           memory: 512M
 
   backend:
-    build:
-      context: ./backend
-      dockerfile: ./Dockerfile
+    image: ghcr.io/amshaine/excellence_test_backend:latest
     ports:
-      - "8000:8000"
+      - "8002:8000"
     environment:
       - DB_CONNECTION=mysql
       - DB_HOST=${DB_HOST:-mysql}
@@ -28,6 +27,8 @@ services:
       - DB_DATABASE=${DB_DATABASE:-laravel}
       - DB_USERNAME=${DB_USERNAME:-laravel}
       - DB_PASSWORD=${DB_PASSWORD:-secret}
+    volumes:
+      - backend:/var/www
     restart: always
     deploy:
       resources:
@@ -54,4 +55,6 @@ services:
           memory: 256M
 
 volumes:
-  mysql_data: 
+  mysql_data:
+  frontend:
+  backend: 
