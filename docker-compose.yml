@@ -22,7 +22,6 @@ services:
       - "8002:8000"
     environment:
       - DB_CONNECTION=mysql
-      - DB_HOST=${DB_HOST:-mysql}
       - DB_PORT=${DB_PORT:-3306}
       - DB_DATABASE=${DB_DATABASE:-laravel}
       - DB_USERNAME=${DB_USERNAME:-laravel}
