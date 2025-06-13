@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\MaidController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,4 +25,8 @@ Route::get('/test', function () {
         'message' => 'Hello from Laravel API!',
         'timestamp' => now()->toIso8601String(),
     ]);
-}); 
+});
+
+Route::get('/maids', [MaidController::class, 'index']);
+Route::get('/maids/{id}', [MaidController::class, 'show']);
+Route::post('/maids', [MaidController::class, 'store']); 
